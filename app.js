@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // 解决API跨域问题
-const allowedOrigins = ['http://127.0.0.1:3000','http://127.0.0.1:5173', 'http://127.0.0.1:3001', 'https://s.qcqx.cn', 'http://s.qcqx.cn', undefined];
+const allowedOrigins = ['http://127.0.0.1:3000', 'http://127.0.0.1:5173', 'http://127.0.0.1:3001', 'https://s.qcqx.cn', 'http://s.qcqx.cn', 'http://localhost:4000', undefined];
 app.all("/*", function (req, res, next) {
   if (allowedOrigins.includes(req.headers.origin)) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
@@ -32,9 +32,9 @@ app.all("/*", function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", true); // 跨域的时候是否携带cookie
     if (req.method.toLowerCase() == 'options')
       res.send(200); // 让options 尝试请求快速结束
-    else 
+    else
       next();
-  }else{
+  } else {
     res.json({
       code: 9403,
       msg: '没有访问权限',
@@ -49,7 +49,7 @@ app.use('/api', shareRouter);
 app.use('/api', viewRouter);
 
 // 最后兜底的路由
-app.all('*', (req,res) => {
+app.all('*', (req, res) => {
   res.json({
     code: 9001,
     msg: '无效的api',
@@ -58,7 +58,7 @@ app.all('*', (req,res) => {
 })
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
