@@ -1,7 +1,6 @@
 const CaptchaModel = require('../models/CaptchaModel');
 const checkCaptchaMiddleware = async (req, res, next) => {
   let { captcha_id, captcha_text } = req.body;
-  console.log(req.body);
   if (!captcha_id || !captcha_text) {
     return res.json({
       code: '5001',
