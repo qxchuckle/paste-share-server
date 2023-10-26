@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken');
 
 const checkAuthMiddleware = require('../../middleware/checkAuthMiddleware');
 const checkAdminMiddleware = require('../../middleware/checkAdminMiddleware');
+const checkCaptchaMiddleware = require('../../middleware/checkCaptchaMiddleware');
 // 导入token校验中间件
 const checkTokenMiddleware = require('../../middleware/checkTokenMiddleware');
 
@@ -114,7 +115,7 @@ router.post('/login', checkAuthMiddleware, (req, res) => {
 });
 
 // 注册API
-router.post('/reg', checkAuthMiddleware, (req, res) => {
+router.post('/reg', checkAuthMiddleware, checkCaptchaMiddleware, (req, res) => {
   // 如果用户名重复就重新注册
   UserModel.findOne({
     username: req.body.username,
@@ -279,7 +280,7 @@ router.post('/user/delete', checkTokenMiddleware, checkAdminMiddleware, (req, re
     await UserModel.updateOne({
       _id: data._id,
       is_deleted: false
-    }, { 
+    }, {
       is_deleted: true,
       deleted_at: String(Date.now())
     });

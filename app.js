@@ -8,6 +8,7 @@ const logger = require('morgan');
 const authRouter = require('./routes/api/auth.js');
 const shareRouter = require('./routes/api/share');
 const viewRouter = require('./routes/api/view');
+const captchaRouter = require('./routes/api/captcha');
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.all("/*", function (req, res, next) {
 app.use('/api', authRouter);
 app.use('/api', shareRouter);
 app.use('/api', viewRouter);
+app.use('/api', captchaRouter);
 
 // 最后兜底的路由
 app.all('*', (req, res) => {
